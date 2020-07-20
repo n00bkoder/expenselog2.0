@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+  <div class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+         <div>
+            <a href="{% url 'account_email' %}"><button type="button" class="btn btn-outline-success">Change E-mail</button></a>
+            <a href="{% url 'account_logout' %}?next=/entries/logout"><button type="button" class="btn btn-success">Log Out</button></a>
+            <a href="{% url 'entries:entries' %}"><button type="button" class="btn btn-success">Entries</button></a>
+        </div>
+    </div>
+</div>
+
+  <form action='' method=POST>{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Create Entry</button>
+</form>
+
+
+  
+</body>
+</html>

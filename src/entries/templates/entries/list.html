@@ -1,0 +1,66 @@
+{% extends "entries/base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+
+{% block head_title %}{% trans "Entries" %}{% endblock %}
+{% block header %}
+    <div class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
+        
+        <div class="container-md">
+             <div>
+                
+            <div class="dropdown">
+                    <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ current_user.email }}
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a>
+                        <a class="dropdown-item" href="{% url 'account_email' %}">Change Email</a>
+                        <a class="dropdown-item" href="{% url 'account_logout' %}?next=/accounts/login/">Logout</a>
+                    
+                </div>
+                <a href="{% url 'entries:create' %}"><button type="button" class="btn btn-success">Create New Entry</button></a>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+  
+
+{% block content %}
+
+<div class="container-sm">
+{% if entry_list %}
+
+    <h1>Your Entries</h1>
+
+    <table class="table table-striped">
+        <thead>
+         <tr>
+           <th scope="col">Item</th>
+           <th scope="col">Cost</th>
+         </tr>
+        </thead>
+        <tbody>
+        {% for entry in entry_list %}
+        
+            <tr>
+                <td>{{ entry.item}}</td>
+                <td>&#36;{{ entry.cost|intcomma}}</td>
+                <td><a href="/entries/{{ entry.id }}/"><button type="button" class="btn btn-outline-primary">Edit</button></a></td>
+            </tr>
+        
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% else %}
+    <p>No entries are available.</p>
+</div>
+{% endif %}
+
+{% endblock %}
+
+    
