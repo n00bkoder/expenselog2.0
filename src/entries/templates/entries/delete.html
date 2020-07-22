@@ -1,23 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
-    
+{% extends "entries/base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Create" %}{% endblock %}
+{% block header %}
+<div class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+         <div>
+          <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ current_user.email }}
+            </button>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a>
+                
+                <a class="dropdown-item" href="{% url 'account_logout' %}?next=/accounts/login/">Logout</a>
+            
+        </div>
+        <a href="{% url 'entries:entries' %}"><button type="button" class="btn btn-success">Entries</button></a>
+    </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+{% block content %}
 <div class="container">
     <form action="." method="POST">{% csrf_token %}
-        <h2>Are you sure you want to delete entry item "{{ instance.item }}"?</h2>
-
-      <p><input type="submit" value="Yes"/>  <a href="../"><button type="button" class="btn btn-success">Cancel</button></a></p>
+        <div class="card border-danger mb-3" >
+            <div class="card-body text-danger">
+             
+                <h4>Are you sure you want to delete entry item "{{ instance.item }}"?</h4>
+            </div>
+        </div>
+      <p><button type="submit" class="btn btn-outline-danger">Yes</button>  <a href="../"><button type="button" class="btn btn-success">Cancel</button></a></p>
 
 
 
     </form>
 </div>
+{% endblock %}
     
 </body>
 </html>

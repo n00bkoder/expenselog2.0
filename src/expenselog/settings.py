@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b&j-a=7i(drdz73j4bj*v)*rpge3v2(tt3k8%g(ynjhflnn9#)'
+SECRET_KEY = '5$(%-*i73!1qu!3f#*64vdf4xgo#_(0by2mu3u^x=v3rnpc^%4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
+
     'accounts',
     'entries'
 ]
@@ -152,3 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+TIME_ZONE = "America/New_York"
+USE_TZ = True

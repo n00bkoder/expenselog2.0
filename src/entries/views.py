@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from. models import Entry
 from .forms import EntryForm
 
+
+from django.db.models import Sum
+
 @login_required
 def log_create_view(request):
     # Display form for user
@@ -13,23 +16,30 @@ def log_create_view(request):
         form.user = request.user
         form.save()
         return redirect('/entries')
+    current_user = request.user
 
     context = {
-        'form': form
+        'form': form,
+        'current_user': current_user
     }
     return render(request, 'entries/create.html', context)
+
 
 @login_required
 def entry_view(request):
     current_user = request.user
     # gets list of objects for the current user
     entry_list = Entry.objects.filter(user=current_user) 
+    total = Entry.objects.filter(user=current_user).aggregate(Sum('cost'))['cost__sum'] or 0.00
 
     context = {
         'entry_list': entry_list,
-        'current_user': current_user
+        'current_user': current_user,
+        'total': total,
+        
     }
     return render(request, 'entries/list.html', context)
+
 
 @login_required
 def update_view(request, id):
@@ -45,10 +55,12 @@ def update_view(request, id):
             form.user = request.user
             form.save()
             return redirect('/entries')
+    current_user = request.user
     
     context = {
         'form': form,
-        'instance': instance
+        'instance': instance,
+        'current_user': current_user,
     }
     return render(request, 'entries/update.html', context)
 
@@ -59,8 +71,14 @@ def delete_view(request, id):
     if request.method == "POST":
         instance.delete()
         return redirect('/entries')
+    current_user = request.user
     context = {
-        "instance": instance
+        "instance": instance,
+        'current_user': current_user,
+        
     }
     return render(request, "entries/delete.html", context)
 
+
+
+    

@@ -1,28 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
+{% extends "entries/base.html" %}
+{% load i18n %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}{% trans "Create" %}{% endblock %}
+{% block header %}
   <div class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
          <div>
-            <a href="{% url 'account_email' %}"><button type="button" class="btn btn-outline-success">Change E-mail</button></a>
-            <a href="{% url 'account_logout' %}?next=/entries/logout"><button type="button" class="btn btn-success">Log Out</button></a>
-            <a href="{% url 'entries:entries' %}"><button type="button" class="btn btn-success">Entries</button></a>
+          <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ current_user.email }}
+            </button>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a>
+                <a class="dropdown-item" href="{% url 'account_logout' %}?next=/accounts/login/">Logout</a>
+            
+        </div>
+        <a href="{% url 'entries:entries' %}"><button type="button" class="btn btn-success">Entries</button></a>
+    </div>
         </div>
     </div>
 </div>
-
+{% endblock %}
+{% block content %}
+<div class="container">
   <form action='' method=POST>{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Create Entry</button>
+    <div class="form-group">
+    {{ form|crispy }}
+    
+    <button type="submit" class="btn btn-outline-primary">Create Entry</button>
+  </div>
 </form>
+</div>
+{% endblock %}
 
 
-  
-</body>
-</html>
+ 

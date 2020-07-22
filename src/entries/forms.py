@@ -8,3 +8,15 @@ class EntryForm(forms.ModelForm):
             'item',
             'cost'
         ]
+        widgets = {
+            'item': forms.TextInput(
+				attrs={
+					'class': 'form-control'
+					}
+				),
+            'cost': forms.TextInput(
+				attrs={
+					'class': 'form-control'
+					}
+				),
+			}
